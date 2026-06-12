@@ -1,4 +1,4 @@
-﻿# Dependencies
+# Dependencies
 node_modules/
 **/node_modules/
 
@@ -50,3 +50,26 @@ Thumbs.db
 *.7z
 *.tmp
 *.temp
+
+# Additional caches / temp
+*.cache
+*.local
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
+tmp/
+temp/
+**/tmp/
+**/temp/
+.npm/
+.yarn/cache/
+.pnpm-store/
+# Runtime files
+*.pid
+*.seed
+*.pid.lock
+# Large installers/images/archives
+*.iso
+*.dmg
+*.exe
+*.msi
