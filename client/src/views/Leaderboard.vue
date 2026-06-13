@@ -29,36 +29,25 @@
         </div>
       </div>
 
-      <div class="podium-section" v-if="top3.length === 3">
-        <div class="podium">
-          <div class="podium-item second" @click="goUser(top3[1].userId)">
-            <div class="podium-avatar-wrap">
-              <img :src="top3[1].avatar" class="podium-avatar" />
-              <span class="podium-medal silver">2</span>
+      <div class="podium-section" v-if="topN.length">
+        <div class="podium" :class="'podium-' + topN.length">
+          <template v-for="item in podiumOrder" :key="item.key">
+            <div
+              v-if="topN[item.idx]"
+              class="podium-item"
+              :class="item.cls"
+              @click="goUser(topN[item.idx].userId)"
+            >
+              <div class="crown" v-if="item.cls === 'first'">👑</div>
+              <div class="podium-avatar-wrap">
+                <img :src="topN[item.idx].avatar" class="podium-avatar" />
+                <span class="podium-medal" :class="item.medal">{{ topN[item.idx].rank }}</span>
+              </div>
+              <div class="podium-name">{{ topN[item.idx].username }}</div>
+              <div class="podium-value">{{ formatValue(topN[item.idx]) }}</div>
+              <div class="podium-bar" :class="item.barCls"></div>
             </div>
-            <div class="podium-name">{{ top3[1].username }}</div>
-            <div class="podium-value">{{ formatValue(top3[1]) }}</div>
-            <div class="podium-bar silver-bar"></div>
-          </div>
-          <div class="podium-item first" @click="goUser(top3[0].userId)">
-            <div class="crown">👑</div>
-            <div class="podium-avatar-wrap">
-              <img :src="top3[0].avatar" class="podium-avatar" />
-              <span class="podium-medal gold">1</span>
-            </div>
-            <div class="podium-name">{{ top3[0].username }}</div>
-            <div class="podium-value">{{ formatValue(top3[0]) }}</div>
-            <div class="podium-bar gold-bar"></div>
-          </div>
-          <div class="podium-item third" @click="goUser(top3[2].userId)">
-            <div class="podium-avatar-wrap">
-              <img :src="top3[2].avatar" class="podium-avatar" />
-              <span class="podium-medal bronze">3</span>
-            </div>
-            <div class="podium-name">{{ top3[2].username }}</div>
-            <div class="podium-value">{{ formatValue(top3[2]) }}</div>
-            <div class="podium-bar bronze-bar"></div>
-          </div>
+          </template>
         </div>
       </div>
 
@@ -101,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
 import { leaderboardApi } from '../api'
@@ -117,8 +106,31 @@ const myRank = ref(null)
 const myStats = ref(null)
 const loading = ref(false)
 
-const top3 = computed(() => list.value.slice(0, 3))
-const restList = computed(() => list.value.slice(3))
+const PODIUM_COUNT = 3
+
+const topN = computed(() => list.value.slice(0, PODIUM_COUNT))
+const restList = computed(() => list.value.slice(topN.value.length))
+
+const podiumLayouts = {
+  1: [
+    { key: 0, idx: 0, cls: 'first', medal: 'gold', barCls: 'gold-bar' }
+  ],
+  2: [
+    { key: 1, idx: 1, cls: 'second', medal: 'silver', barCls: 'silver-bar' },
+    { key: 0, idx: 0, cls: 'first', medal: 'gold', barCls: 'gold-bar' }
+  ],
+  3: [
+    { key: 1, idx: 1, cls: 'second', medal: 'silver', barCls: 'silver-bar' },
+    { key: 0, idx: 0, cls: 'first', medal: 'gold', barCls: 'gold-bar' },
+    { key: 2, idx: 2, cls: 'third', medal: 'bronze', barCls: 'bronze-bar' }
+  ]
+}
+
+const podiumOrder = computed(() => {
+  const n = topN.value.length
+  const layout = podiumLayouts[n] || []
+  return layout.map(l => ({ ...l }))
+})
 
 const formatValue = (item) => {
   if (!item) return ''

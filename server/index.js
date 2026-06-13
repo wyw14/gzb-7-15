@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const path = require('path');
 
 const app = express();
 const PORT = 3115;
@@ -29,10 +28,10 @@ app.use('/api/recommendations', recommendRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: '鏃т箰鍣ㄦ祦杞笌缁冧範鎼瓙骞冲彴鏈嶅姟杩愯涓? });
+  res.json({ status: 'ok', message: '旧乐器流转与练习搭子平台服务运行中' });
 });
 
 app.listen(PORT, () => {
-  console.log(`鏈嶅姟鍣ㄨ繍琛屽湪 http://localhost:${PORT}`);
+  console.log(`服务运行在 http://localhost:${PORT}`);
 });
 
