@@ -23,6 +23,10 @@
           <el-icon><Calendar /></el-icon>
           <span>练琴打卡</span>
         </router-link>
+        <router-link to="/leaderboard" class="nav-item" :class="{ active: $route.name === 'Leaderboard' }">
+          <el-icon><Trophy /></el-icon>
+          <span>排行榜</span>
+        </router-link>
       </nav>
       
       <div class="header-right">

@@ -45,6 +45,12 @@ const routes = [
     meta: { title: '练琴打卡', requiresAuth: true }
   },
   {
+    path: '/leaderboard',
+    name: 'Leaderboard',
+    component: () => import('../views/Leaderboard.vue'),
+    meta: { title: '练习排行榜' }
+  },
+  {
     path: '/messages',
     name: 'Messages',
     component: () => import('../views/Messages.vue'),

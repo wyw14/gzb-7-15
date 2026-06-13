@@ -21,6 +21,7 @@
         <ul>
           <li><router-link to="/buddies">寻找搭子</router-link></li>
           <li><router-link to="/checkin">练琴打卡</router-link></li>
+          <li><router-link to="/leaderboard">练习排行榜</router-link></li>
           <li><a href="#">热门曲目</a></li>
         </ul>
       </div>

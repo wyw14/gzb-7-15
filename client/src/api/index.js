@@ -68,4 +68,8 @@ export const recommendApi = {
   pieces: (userId) => api.get(`/recommendations/pieces/${userId}`)
 }
 
+export const leaderboardApi = {
+  get: (params) => api.get('/leaderboard', { params })
+}
+
 export default api

@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -17,6 +17,7 @@ const invitationRoutes = require('./routes/invitations');
 const checkinRoutes = require('./routes/checkins');
 const reviewRoutes = require('./routes/reviews');
 const recommendRoutes = require('./routes/recommendations');
+const leaderboardRoutes = require('./routes/leaderboard');
 
 app.use('/api/users', userRoutes);
 app.use('/api/instruments', instrumentRoutes);
@@ -25,6 +26,7 @@ app.use('/api/invitations', invitationRoutes);
 app.use('/api/checkins', checkinRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/recommendations', recommendRoutes);
+app.use('/api/leaderboard', leaderboardRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: '鏃т箰鍣ㄦ祦杞笌缁冧範鎼瓙骞冲彴鏈嶅姟杩愯涓? });
